@@ -1,5 +1,6 @@
 #include "mJson.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 int main() {
     const char *json = "{"
@@ -23,6 +24,43 @@ int main() {
         return 1;
     }
 
+    // 构建基础数量类型
+    JsonValue* arr = create_array();
+    array_append(arr, create_int(42));
+    array_append(arr, create_int(88));
+
+    size_t n;
+    for (n = 0; n < arr->value.array_value.ele_count; n++) {
+        int ret = arr->value.array_value.elements[n].value.int_value;
+        printf("skill ->: %d\n", ret);
+    }
+
+
+    JsonValue* obj = create_object();
+    object_add_pair(obj, "name", create_string("Alice"));
+    object_add_pair(obj, "scores", arr);
+
+    //char* jsonStr = json_to_string(obj);
+    //printf("jsonStr ->: %s\n", jsonStr);
+
+
+    // 构建复杂对象
+    //JsonValue *data = build_sample_object();
+    //JsonValue *data = create_float(20.1713);
+    //printf("Name ->: %f\n", data->value.float_value);
+//    JsonValue* new_value = calloc(1, sizeof(JsonValue));
+//    new_value->value.int_value=80;
+//
+//    // 插入到路径 "user.ids" 的位置
+//    int result = json_insert(&root, "age", new_value);
+
+
+
+
+
+
+
+
     // 查询示例
     JsonValue* name = json_get(&root, "name");
     JsonValue* age = json_get(&root, "age");
@@ -40,7 +78,7 @@ int main() {
     printf("weight ->: %lf\n", weight->value.double_value);
 
     size_t i;
-    for (i = 0; i < skill->value.array_value.count; i++) {
+    for (i = 0; i < skill->value.array_value.ele_count; i++) {
         printf("skill ->: %s\n", skill->value.array_value.elements[i].value.string_value);
     }
 
